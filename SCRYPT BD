@@ -1,0 +1,105 @@
+/* Lógico_1: */
+
+
+CREATE TABLE IF NOT EXISTS NotaFiscal (
+    idNotaFiscal INTEGER PRIMARY KEY IDENTITY NOT NULL,
+    dataVenda DATE NOT NULL,
+    TotalNota DECIMAL(15 NULL,2) NOT NULL,
+    fk_Cliente_idCliente INTEGER NOT NULL,
+    fk_Usuario_idUsuario INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Produto (
+    precoVenda DECIMAL(15 NULL,2) NOT NULL,
+    unidadeMedida CHAR (5) NOT NULL,
+    idProduto INTEGER PRIMARY KEY IDENTITY NOT NULL,
+    dataCadastro DATE NOT NULL,
+    descricao VARCHAR (300) NULL,
+    codigoBarra NUMERIC (14) NULL,
+    status BIT NOT NULL,
+    imagem VARCHAR (300) NULL,
+    fk_Fornecedor_idFornecedor INTEGER NOT NULL,
+    fk_Categoria_idCategoria INTEGER NOT NOT
+);
+
+CREATE TABLE IF NOT EXISTS Cliente (
+    dataCadastro DATE NOT NULL,
+    observacoes VARCHAR (300) NULL,
+    status BIT NOT NULL,
+    idCliente INTEGER PRIMARY KEY IDENTITY NOT NULL,
+    email VARCHAR (300) NULL,
+    cpfcnpj VARCHAR (16) NOT NULL,
+    nome VARCHAR (300) NOT NULL,
+    Tipo CHAR (2) NULL,
+    telefone NUMERIC (14) NULL
+);
+
+CREATE TABLE IF NOT EXISTS Usuario (
+    idUsuario INTEGER PRIMARY KEY IDENTITY NOT NULL,
+    nome VARCHAR (300) NOT NULL,
+    dataCadastro DATE NOT NULL,
+    email VARCHAR (300) NOT NULL,
+    Status BIT NOT NULL,
+    perfilAcesso VARCHAR (300) NOT NULL,
+    senha VARCHAR (300) NOT NULL,
+    Telefone NUMERIC (14) NULL
+);
+
+CREATE TABLE IF NOT EXISTS Fornecedor (
+    cep NUMERIC (9) NULL,
+    imagem VARCHAR (300) NULL,
+    razaoSocial VARCHAR (300) NOT NULL,
+    contato VARCHAR (300) NULL,
+    Status BIT NOT NULL,
+    dataCadastro DATE NOT NULL,
+    numero NUMERIC (15) NULL,
+    estado CHAR (2) NULL,
+    complemento VARCHAR (300) NULL,
+    logradouro VARCHAR (300) NULL,
+    cidade VARCHAR (300) NULL,
+    bairro VARCHAR (300) NULL,
+    idFornecedor INTEGER PRIMARY KEY IDENTITY NOT NULL,
+    cpfcnpj NUMERIC (16) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Categoria (
+    Descricao VARCHAR (300) NULL,
+    idCategoria INTEGER PRIMARY KEY IDENTITY NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS NotaItem (
+    fk_NotaFiscal_idNotaFiscal INTEGER NOT NULL,
+    fk_Produto_idProduto INTEGER NOT NULL,
+    TotalItem DECIMAL(15,2) NULL,
+    quantidade INTEGER NOT NULL
+);
+ 
+ALTER TABLE NotaFiscal ADD CONSTRAINT FK_NotaFiscal_2
+    FOREIGN KEY (fk_Cliente_idCliente)
+    REFERENCES Cliente (idCliente)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE NotaFiscal ADD CONSTRAINT FK_NotaFiscal_3
+    FOREIGN KEY (fk_Usuario_idUsuario)
+    REFERENCES Usuario (idUsuario)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Produto ADD CONSTRAINT FK_Produto_2
+    FOREIGN KEY (fk_Fornecedor_idFornecedor)
+    REFERENCES Fornecedor (idFornecedor)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Produto ADD CONSTRAINT FK_Produto_3
+    FOREIGN KEY (fk_Categoria_idCategoria)
+    REFERENCES Categoria (idCategoria)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE NotaItem ADD CONSTRAINT FK_NotaItem_1
+    FOREIGN KEY (fk_NotaFiscal_idNotaFiscal)
+    REFERENCES NotaFiscal (idNotaFiscal)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE NotaItem ADD CONSTRAINT FK_NotaItem_2
+    FOREIGN KEY (fk_Produto_idProduto)
+    REFERENCES Produto (idProduto)
+    ON DELETE SET NULL;
