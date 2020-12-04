@@ -38,8 +38,7 @@ CREATE TABLE `tbl_user` (
   `user_pass` varchar(255) NOT NULL,
   `user_img_profile` varchar(255) DEFAULT NULL,
   `user_type_profile` varchar(45) NOT NULL,
-  `user_status` varchar(45) NOT NULL,
-  `tbl_usercol` varchar(45) NOT NULL
+  `user_status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
