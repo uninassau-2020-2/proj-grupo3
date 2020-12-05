@@ -22,13 +22,13 @@ def appLogin():
 
 @app.route("/RDCapi", methods=['POST'])
 def appApi():
-    aux_a = request.get_json(force=True)
-    aux_b = jsonify(aux_a)
-    clientRequest = aux_b.get_json()
-    
-    facade = Facade(clientRequest)
-    return jsonify(facade.serverResponse()), facade.serverResponse()['status_code']
 
+    #Get clientRequest JSON to Dict
+    clientRequest = request.get_json(force=True)    
+    #Send Facade
+    facade = Facade(clientRequest)
+    #Return Facade
+    return jsonify(facade.serverResponse()), facade.serverResponse()['status_code']
 
 if __name__ == '__main__':
     app.run(app.config['HOST'], app.config['PORT'])
